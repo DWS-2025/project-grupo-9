@@ -1,4 +1,4 @@
-package com.gymadmin.models;
+package com.gym_admin.models;
 
 import jakarta.persistence.*;
 

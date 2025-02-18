@@ -1,24 +1,19 @@
-package com.example.practicapaginaweb.controller;
+package com.gym_admin.controllers;
 
-import com.example.practicapaginaweb.model.Usuario;
-import com.example.practicapaginaweb.service.UserService;
+import com.gym_admin.models.User;
+import com.gym_admin.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/usuarios")
-    public String listUsuarios(Model model) {
-        List<Usuario> usuarios = userService.getAllUsuarios();
-        model.addAttribute("usuarios", usuarios);
-        return "usuarios"; // Nombre de la plantilla Thymeleaf
+    @GetMapping
+    public User getUser() {
+        return userService.getUser();
     }
 }

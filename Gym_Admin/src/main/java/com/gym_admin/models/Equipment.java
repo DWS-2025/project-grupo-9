@@ -3,18 +3,17 @@ package com.gym_admin.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "classes")
-public class Class {
+@Table(name = "equipment")
+public class Equipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
-    private String instructor;
-    private String schedule;
+    private String status;
 
-    public Class() {}
+    public Equipment() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -25,10 +24,6 @@ public class Class {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getInstructor() { return instructor; }
-    public void setInstructor(String instructor) { this.instructor = instructor; }
-
-    public String getSchedule() { return schedule; }
-    public void setSchedule(String schedule) { this.schedule = schedule; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
-

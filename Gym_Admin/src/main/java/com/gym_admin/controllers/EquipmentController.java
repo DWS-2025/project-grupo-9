@@ -1,40 +1,39 @@
-package com.example.practicapaginaweb.controller;
+package com.gym_admin.controllers;
 
-import com.example.practicapaginaweb.model.Equipamiento;
-import com.example.practicapaginaweb.service.EquipamientoService;
+import com.gym_admin.models.Equipment;
+import com.gym_admin.services.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
-@Controller
-public class EquipamientoController {
-
+@RestController
+@RequestMapping("/equipment")
+public class EquipmentController {
     @Autowired
-    private EquipamientoService equipamientoService;
+    private EquipmentService equipmentService;
 
-    @GetMapping("/equipamientos")
-    public String listEquipamientos(Model model) {
-        List<Equipamiento> equipamientos = equipamientoService.getAllEquipamientos();
-        model.addAttribute("equipamientos", equipamientos);
-        return "equipamientos"; // Nombre de la plantilla Thymeleaf
+    @GetMapping
+    public List<Equipment> getAllEquipment() {
+        return equipmentService.getAllEquipment();
     }
 
-    @PostMapping("/equipamientos/add")
-    public String addEquipamiento(@RequestParam String nombre) {
-        Equipamiento newEquipamiento = new Equipamiento();
-        newEquipamiento.setNombre(nombre);
-        equipamientoService.saveEquipamiento(newEquipamiento);
-        return "redirect:/equipamientos";
+    @PostMapping
+    public Equipment createEquipment(@RequestBody Equipment equipment) {
+        return equipmentService.saveEquipment(equipment);
     }
 
-    @PostMapping("/equipamientos/delete")
-    public String deleteEquipamiento(@RequestParam Long id) {
-        equipamientoService.deleteEquipamiento(id);
-        return "redirect:/equipamientos";
+    @PostMapping("/{id}/upload-image")
+    public String uploadImage(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
+        String filePath = "uploads/" + file.getOriginalFilename();
+        file.transferTo(new File(filePath));
+        return "Imagen subida correctamente: " + filePath;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEquipment(@PathVariable Long id) {
+        equipmentService.deleteEquipment(id);
     }
 }

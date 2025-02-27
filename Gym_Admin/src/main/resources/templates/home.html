@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Admin - Inicio</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: url('/static/fondo.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+        .content {
+            text-align: center;
+            margin-top: 100px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <a href="Trainers.html">Entrenadores</a>
+    <a href="ManageClass.html">Clases</a>
+    <a href="/routines">Rutinas</a>
+</nav>
+<div class="content">
+    <h1>Bienvenido a MilfsGym</h1>
+    <p>Tu gimnasio de confianza con las mejores instalaciones y entrenadores.</p>
+    <p>Ofrecemos una variedad de clases diseñadas para mejorar tu rendimiento físico.</p>
+</div>
+</body>
+</html>

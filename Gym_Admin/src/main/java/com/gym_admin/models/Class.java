@@ -1,6 +1,7 @@
 package com.gym_admin.models;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "classes")
@@ -13,6 +14,9 @@ public class Class {
     private String description;
     private String instructor;
     private String schedule;
+
+    @OneToMany(mappedBy = "classEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Equipment> equipment;
 
     public Class() {}
 
@@ -30,5 +34,9 @@ public class Class {
 
     public String getSchedule() { return schedule; }
     public void setSchedule(String schedule) { this.schedule = schedule; }
+
+    public List<Equipment> getEquipment() { return equipment; }
+    public void setEquipment(List<Equipment> equipment) { this.equipment = equipment; }
 }
+
 

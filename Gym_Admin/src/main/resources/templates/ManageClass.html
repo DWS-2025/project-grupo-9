@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clases</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .class-list {
+            margin-top: 20px;
+        }
+        .class-item {
+            padding: 10px;
+            background: #fff;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Gestión de Clases</h2>
+    <input type="text" id="className" placeholder="Nombre de la clase">
+    <input type="text" id="classDescription" placeholder="Descripción">
+    <button onclick="addClass()">Agregar Clase</button>
+
+    <h3>Lista de Clases</h3>
+    <div id="classList" class="class-list"></div>
+</div>
+
+<script>
+    async function fetchClasses() {
+        console.log("Cargando lista de clases...");
+        const response = await fetch('http://localhost:8080/classes');
+        const classes = await response.json();
+        console.log("Clases recibidas:", classes);
+        const classList = document.getElementById('classList');
+        classList.innerHTML = '';
+        classes.forEach(cl => {
+            const div = document.createElement('div');
+            div.className = 'class-item';
+            div.innerHTML = `
+                    <span>${cl.name} - ${cl.description}</span>
+                    <button class="delete-btn" onclick="deleteClass(${cl.id})">Eliminar</button>
+                `;
+            classList.appendChild(div);
+        });
+    }
+
+    async function addClass() {
+        const name = document.getElementById('className').value;
+        const description = document.getElementById('classDescription').value;
+        if (!name || !description) {
+            alert("Por favor, ingresa un nombre y una descripción");
+            return;
+        }
+        await fetch('/classes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, description })
+        });
+        document.getElementById('className').value = '';
+        document.getElementById('classDescription').value = '';
+        fetchClasses();
+    }
+
+    async function deleteClass(id) {
+        if (!confirm("¿Estás seguro de que deseas eliminar esta clase?")) return;
+        await fetch(`/classes/${id}`, { method: 'DELETE' });
+        fetchClasses();
+    }
+
+    window.onload = fetchClasses;
+</script>
+</body>
+</html>
+
+

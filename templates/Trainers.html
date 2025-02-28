@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenadores del Gimnasio</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/static/trainer.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        #trainers-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .trainer-card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+        .trainer-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+            object-fit: cover;
+        }
+        .row-two {
+            grid-column: span 3;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Entrenadores del Gimnasio</h1>
+<div id="trainers-list">
+    <div class="trainer-card">
+        <img src="/static/juan.jpg" alt="Juan Pérez">
+        <h2>Juan Pérez</h2>
+        <p><strong>Especialidad:</strong> Entrenamiento funcional</p>
+        <p>Especialista en fuerza y resistencia.</p>
+    </div>
+
+    <div class="trainer-card">
+        <img src="/static/ana.jpg" alt="Ana López">
+        <h2>Ana López</h2>
+        <p><strong>Especialidad:</strong> Yoga</p>
+        <p>Profesora de yoga con más de 10 años de experiencia.</p>
+    </div>
+
+    <div class="trainer-card">
+        <img src="/static/carlos.jpg" alt="Carlos Gómez">
+        <h2>Carlos Gómez</h2>
+        <p><strong>Especialidad:</strong> CrossFit</p>
+        <p>Entrenador certificado de CrossFit con amplia experiencia.</p>
+    </div>
+
+    <div class="row-two">
+        <div class="trainer-card">
+            <img src="/static/laura.jpg" alt="Laura Fernández">
+            <h2>Laura Fernández</h2>
+            <p><strong>Especialidad:</strong> Pilates</p>
+            <p>Instructora certificada en Pilates con experiencia en rehabilitación.</p>
+        </div>
+
+        <div class="trainer-card">
+            <img src="/static/marta.jpg" alt="Marta Sánchez">
+            <h2>Marta Sánchez</h2>
+            <p><strong>Especialidad:</strong> Zumba</p>
+            <p>Entrenadora de Zumba con pasión por el baile y la actividad física.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

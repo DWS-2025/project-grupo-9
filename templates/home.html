@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MilfsGym - Inicio</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            background: url('/static/home.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centra verticalmente el contenido */
+        }
+
+        /* Contenido principal */
+        .content {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .content p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Secciones de exploración */
+        .explore-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .explore-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 30%;
+            min-width: 250px;
+            margin: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .explore-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .explore-card h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .explore-card p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .explore-card button {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .explore-card button:hover {
+            background: #0056b3;
+        }
+
+        /* Animación de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .content h1 {
+                font-size: 36px;
+            }
+
+            .content p {
+                font-size: 16px;
+            }
+
+            .explore-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .explore-card {
+                width: 80%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Contenido principal -->
+<div class="content">
+    <h1>Bienvenido a EnergyFit Gym</h1>
+    <p>Tu gimnasio de confianza con las mejores instalaciones y entrenadores.</p>
+    <p>Ofrecemos una variedad de clases diseñadas para mejorar tu rendimiento físico.</p>
+
+    <!-- Secciones de exploración -->
+    <div class="explore-section">
+        <!-- Tarjeta de Rutinas -->
+        <div class="explore-card">
+            <h2>Rutinas</h2>
+            <p>Descubre nuestras rutinas personalizadas para alcanzar tus objetivos fitness.</p>
+            <button onclick="location.href='Routines.html'">Explorar Rutinas</button>
+        </div>
+
+        <!-- Tarjeta de Entrenadores -->
+        <div class="explore-card">
+            <h2>Entrenadores</h2>
+            <p>Conoce a nuestros entrenadores profesionales y certificados.</p>
+            <button onclick="location.href='Trainers.html'">Ver Entrenadores</button>
+        </div>
+
+        <!-- Tarjeta de Clases -->
+        <div class="explore-card">
+            <h2>Clases</h2>
+            <p>Únete a nuestras clases grupales y mejora tu condición física.</p>
+            <button onclick="location.href='ManageClass.html'">Ver Clases</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clases</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('/static/image.jpg'); /* Ruta de la imagen de fondo */
+            background-size: cover; /* Cubre toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que se repita */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #333;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .class-list {
+            margin-top: 20px;
+        }
+
+        .class-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: rgba(248, 249, 250, 0.9); /* Fondo semi-transparente */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .class-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .equipment-btn {
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .equipment-btn:hover {
+            background-color: #138496;
+        }
+
+        .nav-button {
+            background-color: #28a745;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .nav-button:hover {
+            background-color: #218838;
+        }
+
+        /* Animación de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h3 {
+                font-size: 20px;
+            }
+
+            input[type="text"], select {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+
+            .class-item {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .edit-btn, .delete-btn, .equipment-btn {
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Gestión de Clases</h2>
+    <input type="text" id="className" placeholder="Nombre de la clase">
+    <input type="text" id="classDescription" placeholder="Descripción">
+    <p className="text-xs text-gray-500 font-semibold">Tipo de equipamiento</p>
+    <select id="equipmentSelect" multiple>
+        <!-- Se llenará dinámicamente con los equipamientos disponibles -->
+    </select>
+    <button onclick="addClass()" id="addClassButton">Agregar Clase</button>
+
+    <h3>Lista de Clases</h3>
+    <div id="classList" class="class-list"></div>
+
+    <button class="nav-button" onclick="goToEquipment()">Ir a Equipamiento</button>
+</div>
+
+<script>
+    let classes = [];
+    let equipments = [
+        { name: "Mancuernas", description: "Pesas de mano para ejercicios de fuerza." },
+        { name: "Barras olímpicas", description: "Barras largas para levantamiento de pesas." },
+        { name: "Discos de peso", description: "Discos para añadir resistencia a las barras." },
+        { name: "Kettlebells", description: "Pesas con asa para ejercicios funcionales." },
+        { name: "Cinta de correr", description: "Máquina para correr o caminar en interiores." },
+        { name: "Bicicleta estática", description: "Bicicleta fija para entrenamiento cardiovascular." },
+        { name: "Elíptica", description: "Máquina para ejercicio cardiovascular de bajo impacto." },
+        { name: "Remo máquina", description: "Simulador de remo para entrenamiento cardiovascular y de fuerza." },
+        { name: "Colchonetas", description: "Para ejercicios en el suelo como yoga o pilates." },
+        { name: "Bandas de resistencia", description: "Bandas elásticas para ejercicios de fuerza y estiramientos." },
+        { name: "Pelotas de estabilidad", description: "Pelotas grandes para ejercicios de core y equilibrio." },
+        { name: "Steps", description: "Plataformas para ejercicios aeróbicos y de step." },
+        { name: "Cajas de salto", description: "Cajas para entrenamiento pliométrico." },
+        { name: "Barras de dominadas", description: "Barras para ejercicios de fuerza superior." },
+        { name: "Máquina de press de piernas", description: "Máquina para fortalecer las piernas." }
+    ];
+
+    let editIndex = null;
+    function renderClasses() {
+        const classList = document.getElementById('classList');
+        classList.innerHTML = '';
+        classes.forEach((cl, index) => {
+            const div = document.createElement('div');
+            div.className = 'class-item';
+            div.innerHTML = `
+                <span>${cl.name} - ${cl.description}</span>
+                <p>Equipamientos: ${cl.equipments.join(', ')}</p>
+                <div>
+                    <button class="edit-btn" onclick="editClass(${index})">Editar</button>
+                    <button class="delete-btn" onclick="deleteClass(${index})">Eliminar</button>
+                </div>
+            `;
+            classList.appendChild(div);
+        });
+    }
+
+    function addClass() {
+        const name = document.getElementById('className').value;
+        const description = document.getElementById('classDescription').value;
+        const selectedEquipments = getSelectedEquipments();
+
+        if (!name || !description || selectedEquipments.length === 0) {
+            alert("Por favor, ingresa un nombre, una descripción y selecciona al menos un equipamiento");
+            return;
+        }
+
+        if (editIndex !== null) {
+            // Si estamos editando, actualizamos la clase existente
+            classes[editIndex] = { name, description, equipments: selectedEquipments };
+            editIndex = null; // Reseteamos el índice de edición
+            document.getElementById('addClassButton').innerText = 'Agregar Clase'; // Cambiamos el texto del botón
+        } else {
+            // Si no estamos editando, agregamos una nueva clase
+            classes.push({ name, description, equipments: selectedEquipments });
+        }
+
+        document.getElementById('className').value = '';
+        document.getElementById('classDescription').value = '';
+        document.getElementById('equipmentSelect').value = '';
+        renderClasses();
+    }
+
+    function getSelectedEquipments() {
+        const select = document.getElementById('equipmentSelect');
+        return Array.from(select.selectedOptions).map(option => option.value);
+    }
+
+    function editClass(index) {
+        const cl = classes[index];
+        document.getElementById('className').value = cl.name;
+        document.getElementById('classDescription').value = cl.description;
+        const select = document.getElementById('equipmentSelect');
+        Array.from(select.options).forEach(option => {
+            option.selected = cl.equipments.includes(option.value);
+        });
+        editIndex = index; // Guardamos el índice de la clase que se está editando
+        document.getElementById('addClassButton').innerText = 'Guardar Cambios'; // Cambiamos el texto del botón
+    }
+
+    function deleteClass(index) {
+        if (confirm("¿Estás seguro de que deseas eliminar esta clase?")) {
+            classes.splice(index, 1);
+            renderClasses();
+        }
+    }
+
+    function updateEquipmentSelect() {
+        const select = document.getElementById('equipmentSelect');
+        select.innerHTML = '';
+        equipments.forEach(eq => {
+            const option = document.createElement('option');
+            option.value = eq.name;
+            option.textContent = eq.name;
+            select.appendChild(option);
+        });
+    }
+
+    function goToEquipment() {
+        window.location.href = 'equipment.html'; // Asegúrate de que esta sea la ruta correcta
+    }
+
+    window.onload = function() {
+        updateEquipmentSelect();
+        renderClasses();
+    };
+</script>
+</body>
+</html>

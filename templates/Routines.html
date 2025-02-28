@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutinas de Entrenamiento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: url('/static/rutinas.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: black;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Estilos para el formulario */
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .form-input {
+            width: 80%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        /* Estilos para la información de la rutina */
+        .routine-info {
+            background: rgba(255, 255, 255, 0.7); /* Fondo con transparencia */
+            backdrop-filter: blur(10px); /* Efecto de desenfoque */
+            border: 2px solid #007BFF; /* Borde azul */
+            border-radius: 15px; /* Bordes redondeados */
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra */
+            display: none; /* Ocultar inicialmente */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave */
+            opacity: 0; /* Inicialmente invisible */
+            transform: translateY(-10px); /* Efecto de desplazamiento */
+        }
+
+        .routine-info.visible {
+            display: block; /* Mostrar */
+            opacity: 1; /* Hacer visible */
+            transform: translateY(0); /* Restablecer posición */
+        }
+
+        #routine-title {
+            color: #007BFF; /* Color azul para el título */
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #routine-description {
+            color: #28A745; /* Color verde para la descripción */
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #routine-muscles {
+            color: #DC3545; /* Color rojo para los músculos trabajados */
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<h1>Rutinas de Entrenamiento</h1>
+
+<!-- Formulario para agregar rutinas -->
+<div class="form-container">
+    <h2>Agregar Nueva Rutina</h2>
+    <input type="text" id="newTitle" class="form-input" placeholder="Título de la rutina">
+    <input type="text" id="newDesc" class="form-input" placeholder="Descripción">
+    <input type="text" id="newMuscles" class="form-input" placeholder="Músculos trabajados (separados por comas)">
+    <button class="routine-button" onclick="addNewRoutine()">Agregar Rutina</button>
+</div>
+
+<!-- Lista de rutinas existentes -->
+<div class="routine-list" id="routineList">
+    <!-- Los botones se generarán dinámicamente -->
+</div>
+
+<!-- Información de la rutina seleccionada -->
+<div class="routine-info" id="routine-info">
+    <h2 id="routine-title"></h2>
+    <p id="routine-description"></p>
+    <p><strong>Músculos trabajados:</strong> <span id="routine-muscles"></span></p>
+</div>
+
+<script>
+    let routines = [
+        { title: "Rutina de Fuerza", description: "Ejercicios con altas cargas y bajas repeticiones para desarrollar fuerza.", muscles: "Pecho, espalda, piernas, hombros, brazos." },
+        { title: "Rutina de Hipertrofia", description: "Entrenamiento con repeticiones medias y pesos moderados para ganar volumen muscular.", muscles: "Pecho, bíceps, tríceps, piernas, espalda." },
+        { title: "Rutina de Resistencia", description: "Ejercicios con muchas repeticiones y poco descanso para mejorar la resistencia muscular.", muscles: "Piernas, brazos, core, hombros." },
+        { title: "Rutina de Full Body", description: "Entrenamiento que trabaja todo el cuerpo en una sola sesión.", muscles: "Todos los grupos musculares." },
+        { title: "Rutina de Piernas y Glúteos", description: "Enfocada en fortalecer y tonificar las piernas y los glúteos.", muscles: "Cuádriceps, isquiotibiales, glúteos, pantorrillas." },
+        { title: "Rutina de Espalda y Bíceps", description: "Entrenamiento para desarrollar una espalda fuerte y bíceps definidos.", muscles: "Dorsales, trapecios, bíceps." },
+        { title: "Rutina de Pecho y Tríceps", description: "Ejercicios específicos para fortalecer el pecho y los tríceps.", muscles: "Pectorales, tríceps, hombros." },
+        { title: "Rutina de Cardio HIIT", description: "Ejercicios cardiovasculares de alta intensidad en intervalos.", muscles: "Piernas, core, brazos, sistema cardiovascular." },
+        { title: "Rutina de Calistenia", description: "Ejercicios con el peso corporal para mejorar fuerza y coordinación.", muscles: "Todo el cuerpo." },
+        { title: "Rutina de Movilidad y Estiramientos", description: "Ejercicios para mejorar la movilidad y prevenir lesiones.", muscles: "Articulaciones, músculos estabilizadores." }
+    ];
+
+    function showRoutine(index) {
+        const routineInfo = document.getElementById("routine-info");
+        document.getElementById("routine-title").innerText = routines[index].title;
+        document.getElementById("routine-description").innerText = routines[index].description;
+        document.getElementById("routine-muscles").innerText = routines[index].muscles;
+
+        // Mostrar con animación
+        routineInfo.classList.add("visible");
+    }
+
+    function renderRoutines() {
+        const container = document.getElementById('routineList');
+        container.innerHTML = '';
+
+        routines.forEach((routine, index) => {
+            const button = document.createElement('button');
+            button.className = 'routine-button';
+            button.innerHTML = `
+                ${routine.title}
+                <button class="delete-btn" onclick="deleteRoutine(${index})">X</button>
+            `;
+            button.onclick = () => showRoutine(index);
+            container.appendChild(button);
+        });
+    }
+
+    function addNewRoutine() {
+        const title = document.getElementById('newTitle').value;
+        const desc = document.getElementById('newDesc').value;
+        const muscles = document.getElementById('newMuscles').value;
+
+        if (!title || !desc || !muscles) {
+            alert('Por favor completa todos los campos');
+            return;
+        }
+
+        routines.push({
+            title: title,
+            description: desc,
+            muscles: muscles
+        });
+
+        // Limpiar campos
+        document.getElementById('newTitle').value = '';
+        document.getElementById('newDesc').value = '';
+        document.getElementById('newMuscles').value = '';
+
+        renderRoutines();
+    }
+
+    function deleteRoutine(index) {
+        if (confirm('¿Estás seguro de eliminar esta rutina?')) {
+            routines.splice(index, 1);
+            renderRoutines();
+        }
+    }
+
+    // Inicializar renderizado
+    renderRoutines();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+
+    <!-- Incluir el archivo CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>Gym Management System</h1>
+    <nav>
+        {{#isAuthenticated}}
+            <span id="username">Welcome, {{username}}!</span>
+            <a href="/classes">Classes</a> |
+            <a href="/equipment">Equipment</a> |
+            <a href="/routines">Routines</a> |
+            <a href="/trainers">Trainers</a> |
+            <a href="/logout">Logout</a>
+        {{/isAuthenticated}}
+        {{^isAuthenticated}}
+            <a href="/login">Login</a> |
+            <a href="/register">Register</a>
+        {{/isAuthenticated}}
+    </nav>
+</header>
+<main>
+    {{{content}}}
+</main>
+
+<!-- Incluir el archivo JavaScript -->
+<script src="/js/scripts.js"></script>
+<footer>
+    <p>&copy; 2025 Gym Management System</p>
+</footer>
+</body>
+</html>

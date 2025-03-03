@@ -1,0 +1,31 @@
+{{<base}}
+    {{$content}}
+        <div class="container">
+            <h2>Equipment</h2>
+            <a href="/equipment/form" class="btn btn-primary mb-3">Add New Equipment</a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#equipmentList}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td>{{description}}</td>
+                        <td>{{status}}</td>
+                        <td>
+                            <a href="/equipment/form?id={{id}}" class="btn btn-info btn-sm">Edit</a>
+                            <a href="/equipment/delete/{{id}}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                {{/equipmentList}}
+                </tbody>
+            </table>
+        </div>
+    {{/content}}
+{{/base}}

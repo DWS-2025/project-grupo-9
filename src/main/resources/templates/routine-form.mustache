@@ -1,0 +1,22 @@
+{{<base}}
+    {{$content}}
+        <div class="container">
+            <h2>{{#routine.id}}Edit{{/routine.id}}{{^routine.id}}Create{{/routine.id}} Routine</h2>
+            <form action="/routines" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{routine.name}}">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description">{{routine.description}}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="duration" class="form-label">Duration (minutes)</label>
+                    <input type="number" class="form-control" id="duration" name="duration" value="{{routine.duration}}">
+                </div>
+                <button type="submit" class="btn btn-success">Save Routine</button>
+            </form>
+        </div>
+    {{/content}}
+{{/base}}

@@ -1,0 +1,15 @@
+{{> header}}
+
+<h1>Gym Trainers</h1>
+<div id="trainers-list">
+    {{#trainers}}
+        <div class="trainer-card">
+            <img src="{{image}}" alt="{{name}}">
+            <h2>{{name}}</h2>
+            <p><strong>Specialty:</strong> {{specialty}}</p>
+            <p>{{description}}</p>
+        </div>
+    {{/trainers}}
+</div>
+
+{{> footer}}

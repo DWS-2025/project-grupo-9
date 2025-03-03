@@ -1,0 +1,32 @@
+{{> header}}
+
+<div class="container">
+    <h2>Class Management</h2>
+    <input type="text" id="className" placeholder="Class Name">
+    <input type="text" id="classDescription" placeholder="Description">
+    <p>Equipment Type</p>
+    <select id="equipmentSelect" multiple>
+        {{#equipments}}
+        <option value="{{id}}">{{name}}</option>
+        {{/equipments}}
+    </select>
+    <button onclick="addClass()" id="addClassButton">Add Class</button>
+
+    <h3>Class List</h3>
+    <div id="classList" class="class-list">
+        {{#classes}}
+        <div class="class-item">
+            <span>{{name}} - {{description}}</span>
+            <p>Equipment: {{equipments}}</p>
+            <div>
+                <button class="edit-btn" onclick="editClass('{{id}}')">Edit</button>
+                <button class="delete-btn" onclick="deleteClass('{{id}}')">Delete</button>
+            </div>
+        </div>
+        {{/classes}}
+    </div>
+
+    <button class="nav-button" onclick="goToEquipment()">Go to Equipment</button>
+</div>
+
+{{> footer}}

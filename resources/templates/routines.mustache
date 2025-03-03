@@ -1,0 +1,28 @@
+{{> header}}
+
+<h1>Workout Routines</h1>
+
+<div class="form-container">
+    <h2>Add New Routine</h2>
+    <form action="/routines" method="post">
+        <input type="text" name="title" class="form-input" placeholder="Routine Title" required>
+        <input type="text" name="description" class="form-input" placeholder="Description" required>
+        <input type="text" name="muscles" class="form-input" placeholder="Muscles worked (comma-separated)" required>
+        <button type="submit" class="routine-button">Add Routine</button>
+    </form>
+</div>
+
+<div class="routine-list">
+    {{#routines}}
+        <div class="routine-item">
+            <h2>{{title}}</h2>
+            <p>{{description}}</p>
+            <p><strong>Muscles worked:</strong> {{muscles}}</p>
+            <form action="/routines/delete/{{id}}" method="post">
+                <button class="delete-btn" type="submit">Delete</button>
+            </form>
+        </div>
+    {{/routines}}
+</div>
+
+{{> footer}}
